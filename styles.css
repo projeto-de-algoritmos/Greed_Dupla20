@@ -1,0 +1,57 @@
+* {
+    font-family: 'Minecraft', sans-serif;
+}
+.celula {
+    width: 25px;
+    height: 25px;
+    border: 1px gray solid;
+    text-align: center;
+}
+
+table {
+    border-spacing: 0px;
+    border: 2px black gray;
+}
+
+img {
+    width: 21px;
+    height: 20px;
+}
+
+#hoglin {
+    width: 400;
+    height: 400;
+}
+
+main {
+    width: 100%;
+    text-align: center;
+}
+
+#game {
+    margin: auto;
+    box-shadow: 0 0 2em black;
+}
+
+header {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    font-size: large;
+    padding: 10px;
+}
+
+.disabled {
+    display: none;
+}
+
+.actived {
+    display: inline-block;
+}
+
+body {
+    background-image: linear-gradient(whitesmoke, lightgray, grey);
+}
