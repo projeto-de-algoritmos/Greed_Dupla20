@@ -15,11 +15,19 @@
             <br />
             <img id="hoglin" src="src/images/hoglin.png" />
         </div>
-        <h2>Score: <span id="score">0</span></h2>
+        <div class="cabecalho">
+            <h2>Valor Otimo: <span id="valorOtimo">0</span></h2>
+            <h2>Score: <span id="score">0</span></h2>
+            <h2>Mochila: <span id="espacoGastoMochila">0</span>/<span id="espacoTotalMochila">0</span></h2>
+        </div>
     </header>
 
     <main>
+        <table id="tabelaValores" class="tabela">
+        </table>
         <table id="game"></table>
+        <table id="highscore" class="tabela">
+        </table>
     </main>
 
     <audio id="music1" src="./src/music/music1.mp3"></audio>
@@ -31,7 +39,8 @@
     <script src="./src/mapData.js"></script>
     <script src="./src/map.js"></script>
     <script src="./src/dijkstra.js"></script>
-    <script src="./src/coin.js"></script>
+    <script src="./src/knapsack.js"></script>
+    <script src="./src/star.js"></script>
     <script src="./src/player.js"></script>
     <script src="./src/enemy.js"></script>
     <script src="./src/inteligentEnemy.js"></script>
