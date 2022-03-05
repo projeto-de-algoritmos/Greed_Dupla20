@@ -1,4 +1,3 @@
-
 class FreeGame extends Game {
     constructor(timeout, map, volume, playerCoord, starCoord, inteligentEnemyCoord, enemiesCoords) {
         super(timeout, map, volume);
@@ -26,11 +25,12 @@ class FreeGame extends Game {
 
     render() {
         super.render();
-        this.inteligentEnemy.render()
         this.renderScore();
+        this.inteligentEnemy.render();
     }
 
     renderScore() {
+        window.document.querySelector("#cabecalho").innerHTML = `<h2>Score: <span id="score">0</span></h2>`;
         window.document.querySelector("#score").innerHTML = this.score;
     }
 

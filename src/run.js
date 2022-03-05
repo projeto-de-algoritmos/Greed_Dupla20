@@ -38,9 +38,16 @@ function runCollectGame() {
         new Coord(1, 26),
         new Coord(29, 26),
     ]
+    const starsAttributes = [
+        { coord: new Coord(11, 10), value: 10, weight: 20, color: "starAmarela" },
+        { coord: new Coord(11, 11), value: 5, weight: 10, color: "starAzul" },
+        { coord: new Coord(11, 12), value: 1, weight: 5, color: "starCobre" },
+        { coord: new Coord(11, 13), value: 10, weight: 10, color: "starRosa" },
+        { coord: new Coord(11, 14), value: 10, weight: 10, color: "starRoxo" },
+    ]
 
     const freeGame = new CollectGame(
-        timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords
+        timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes
     )
 
     freeGame.start();
