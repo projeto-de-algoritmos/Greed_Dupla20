@@ -2,27 +2,21 @@ const POSSIBLE_PATHS = [[0, 1], [0, -1], [1, 0], [-1, 0]];
 
 
 class Enemy {
-    constructor(coord, map) {
+    constructor(coord, map, image = "enemy") {
         this.map = map;
         this.x = coord.x;
         this.y = coord.y;
-        this.slow = 0,
-            this.vel = {
-                x: 1,
-                y: 0,
-            }
+        this.image = image;
+        this.slow = 0;
+        this.vel = {
+            x: 1,
+            y: 0,
+        }
     }
 
     update() {
-        if (this.map.hasBlockSlow(this.x, this.y)) {
-            if (this.slow === 0) {
-                this.slow = this.map.getSlow(this.x, this.y);
-                return;
-            } else {
-                this.slow--;
-                if (this.slow > 0)
-                    return;
-            }
+        if(this.inSlow()){
+            return;
         }
 
         const possiblePaths = this.getPossiblePaths();
@@ -38,6 +32,18 @@ class Enemy {
         [this.x, this.y] = this.nextPosition();
     }
 
+    inSlow(){
+        if (!this.map.hasBlockSlow(this.x, this.y)) {
+            return false;
+        }  
+        if (this.slow === 0) {
+            this.slow = this.map.getSlow(this.x, this.y);
+            return true;
+        }
+        this.slow--;
+        return this.slow > 0;
+    }
+
     getPossiblePaths() {
         return POSSIBLE_PATHS
             .map(p => add(p, [this.x, this.y]))
@@ -46,7 +52,7 @@ class Enemy {
     }
 
     render() {
-        this.map.setImage(this.x, this.y, "enemy");
+        this.map.setImage(this.x, this.y, this.image);
     }
 
     nextPosition() {
