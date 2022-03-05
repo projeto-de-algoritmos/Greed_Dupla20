@@ -86,8 +86,11 @@ function isGameOver() {
 
 function setHighscore() {
     if (highscores.length < 5 || score > highscores[highscores.length - 1].score) {
+        if (highscores.length == 5)
+            highscores.pop();
+
         const playerName = window.prompt(`Insira seu nome:`);
-        highscores.pop();
+
         highscores.push({ score: score, player: playerName });
         highscores.sort((a, b) => a.score > b.score ? -1 : 1);
         localStorage.setItem('highscores', JSON.stringify(highscores));
