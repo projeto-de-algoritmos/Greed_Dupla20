@@ -7,8 +7,9 @@ class CollectGame extends Game {
         this.inteligentEnemy = new InteligentEnemy(inteligentEnemyCoord, map);
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
         this.stars = starsAttributes.map(sa => new Star(sa.coord, map, sa.value, sa.weight, sa.color));
-        this.objects.push(this.player, ...this.enemies);
+        this.objects.push(...this.stars, this.player, ...this.enemies);
         this.bestValue = knapsack(55, this.stars);
+        this.header = this.createHeader();
     }
 
     update() {
@@ -22,21 +23,15 @@ class CollectGame extends Game {
 
     render() {
         super.render();
-        this.renderHeader();
         this.inteligentEnemy.render()
+        this.renderHeader();
     }
 
     renderHeader() {
-        window.document.querySelector("#cabecalho").innerHTML = `
-            <h2>Valor Otimo: <span id="valorOtimo">0</span></h2>
-            <h2>Score: <span id="score">0</span></h2>
-            <h2>Mochila: <span id="espacoGastoMochila">0</span>/<span id="espacoTotalMochila">0</span></h2>
-        `;
-
-        window.document.querySelector("#score").innerHTML = this.score;
-        window.document.querySelector("#valorOtimo").innerHTML = this.bestValue;
-        window.document.querySelector("#espacoGastoMochila").innerHTML = this.player.sack;
-        window.document.querySelector("#espacoTotalMochila").innerHTML = this.maxWeight;
+        this.header.score.innerText = this.score;
+        this.header.bestValue.innerText = this.bestValue;
+        this.header.sack.innerText = this.player.sack;
+        this.header.maxWeight.innerText = this.maxWeight;
     }
 
     end() {
@@ -47,5 +42,19 @@ class CollectGame extends Game {
     isGameOver() {
         return this.enemies.find(e => e.collide(this.player))
             || this.inteligentEnemy.collide(this.player);
+    }
+
+    createHeader(){
+        window.document.querySelector("#cabecalho").innerHTML = `
+            <h2>Valor Otimo: <span id="valorOtimo">0</span></h2>
+            <h2>Score: <span id="score">0</span></h2>
+            <h2>Mochila: <span id="espacoGastoMochila">0</span>/<span id="espacoTotalMochila">0</span></h2>
+        `;
+        return {
+            score: window.document.querySelector("#score"),
+            bestValue: window.document.querySelector("#valorOtimo"),
+            sack: window.document.querySelector("#espacoGastoMochila"),
+            maxWeight: window.document.querySelector("#espacoTotalMochila"),
+        }
     }
 }
