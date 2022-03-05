@@ -1,10 +1,13 @@
 
-class Coin {
+class Star {
 
-    constructor(x, y, map) {
+    constructor(x, y, map, value, weight, color) {
         this.map = map;
         this.x = x;
         this.y = y;
+        this.value = value;
+        this.weight = weight;
+        this.color = color;
     }
 
     updatePosition() {
@@ -22,7 +25,7 @@ class Coin {
     }
 
     render() {
-        this.map.setImage(this.x, this.y, "coin");
+        this.map.setImage(this.x, this.y, "star" + this.color);
     }
 
     collide(obj) {
