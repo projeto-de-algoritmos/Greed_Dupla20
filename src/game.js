@@ -1,6 +1,6 @@
 
 class Game {
-    constructor(timeout, map, volume){
+    constructor(timeout, map, volume) {
         this.timeout = timeout;
         this.map = map;
         this.objects = [this.map]
@@ -9,44 +9,44 @@ class Game {
         this.playRandomSong();
     }
 
-    start(){
+    start() {
         this.map.render();
-        this. gameUpdate = setInterval(() => {
+        this.gameUpdate = setInterval(() => {
             this.update();
             this.render();
         }, this.timeout);
     }
 
-    update(){
+    update() {
         this.objects.forEach(o => o.update());
     }
 
-    render(){
+    render() {
         this.objects.forEach(o => o.render());
     }
 
-    end(){
+    end() {
         this.stopSong();
         this.playSong('lostSong');
         clearInterval(this.gameUpdate);
     }
 
-    playSong(songID){
+    playSong(songID) {
         this.stopSong();
         this.song = window.document.querySelector(`#${songID}`)
         this.song.volume = this.volume;
         this.song.play();
     }
 
-    stopSong(){
-        if(this.song){
+    stopSong() {
+        if (this.song) {
             console.log(this.song);
             this.song.pause();
         }
     }
 
-    playRandomSong(){
+    playRandomSong() {
         const songs = 3;
-        this.playSong(`music${getRandomInt(1, songs+1)}`)
+        this.playSong(`music${getRandomInt(1, songs + 1)}`)
     }
 }

@@ -1,40 +1,40 @@
 
-class FreeGame extends Game{
-    constructor(timeout, map, volume, playerCoord, coinCoord, inteligentEnemyCoord, enemiesCoords){
+class FreeGame extends Game {
+    constructor(timeout, map, volume, playerCoord, starCoord, inteligentEnemyCoord, enemiesCoords) {
         super(timeout, map, volume);
         this.score = 0;
         this.player = new Player(playerCoord, map);
-        this.coin = new Coin(coinCoord, map);
+        this.star = new Star(starCoord, map);
         this.inteligentEnemy = new InteligentEnemy(inteligentEnemyCoord, map);
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
-        this.objects.push(this.player, ...this.enemies, this.coin);
+        this.objects.push(this.player, ...this.enemies, this.star);
     }
-    
+
     update() {
         super.update();
         this.inteligentEnemy.update(this.player);
-    
-        if (this.coin.collide(this.player)) {
-            this.coin.updatePosition();
+
+        if (this.star.collide(this.player)) {
+            this.star.updatePosition();
             this.score++;
         }
-    
+
         if (this.isGameOver()) {
             this.end();
         }
     }
 
-    render(){
+    render() {
         super.render();
         this.inteligentEnemy.render()
         this.renderScore();
     }
 
-    renderScore(){
+    renderScore() {
         window.document.querySelector("#score").innerHTML = this.score;
     }
 
-    end(){
+    end() {
         window.document.querySelector("#lost").classList.add("actived");
         super.end();
     }

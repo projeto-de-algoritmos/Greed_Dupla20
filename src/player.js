@@ -5,6 +5,7 @@ class Player {
         this.x = coord.x;
         this.y = coord.y;
         this.slow = 0;
+        this.sack = 0;
         this.vel = {
             x: 1,
             y: 0

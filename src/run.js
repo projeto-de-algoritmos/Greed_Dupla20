@@ -6,15 +6,15 @@ function onFreeGame() {
     runFreeGame();
 }
 
-function onCollectGame(){
+function onCollectGame() {
     disableInitialScreen()
     runCollectGame();
 }
 
-function runFreeGame(){
+function runFreeGame() {
     const map = new Map(MAP_DATA, WIDTH, HEIGTH);
     const playerCoord = new Coord(28, 1);
-    const coinCoord = new Coord(11, 10);
+    const starCoord = new Coord(11, 10);
     const inteligentEnemyCoord = new Coord(14, 14);
     const enemiesCoords = [
         new Coord(1, 1),
@@ -23,13 +23,13 @@ function runFreeGame(){
     ]
 
     const freeGame = new FreeGame(
-        timeout, map, volume, playerCoord, coinCoord, inteligentEnemyCoord, enemiesCoords
+        timeout, map, volume, playerCoord, starCoord, inteligentEnemyCoord, enemiesCoords
     )
 
     freeGame.start();
 }
 
-function runCollectGame(){
+function runCollectGame() {
     const map = new Map(MAP_DATA, WIDTH, HEIGTH);
     const playerCoord = new Coord(28, 1);
     const inteligentEnemyCoord = new Coord(14, 14);
@@ -46,7 +46,7 @@ function runCollectGame(){
     freeGame.start();
 }
 
-function disableInitialScreen(){
+function disableInitialScreen() {
     window.document.querySelector("#initialScreen").classList.remove("actived")
     window.document.querySelector("#initialScreen").classList.add("disabled")
 }
