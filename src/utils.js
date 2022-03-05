@@ -1,3 +1,9 @@
+class Coord{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+}
 
 function getRandomBool() {
     return getRandomInt(0, 2) === 0;

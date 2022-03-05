@@ -1,11 +1,13 @@
 
 class Coin {
 
-    constructor(x, y, map) {
+    constructor(coord, map) {
         this.map = map;
-        this.x = x;
-        this.y = y;
+        this.x = coord.x;
+        this.y = coord.y;
     }
+
+    update(){}
 
     updatePosition() {
         [this.x, this.y] = this.randomPosition();

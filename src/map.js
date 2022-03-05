@@ -20,6 +20,8 @@ class Map {
         return x >= 0 && x < this.height && y >= 0 && y < this.width
     }
 
+    update(){}
+
     render() {
         let html = ''
         for (let row = 0; row < this.height; row++) {
@@ -57,7 +59,7 @@ class Map {
     }
 
     getSlow(x, y) {
-        if (map.data[x][y] == 1)
+        if (this.data[x][y] == 1)
             return 1;
         return SLOW_TIME[this.getBlock(x, y) - 2];
     }

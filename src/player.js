@@ -1,9 +1,9 @@
 class Player {
 
-    constructor(x, y, map) {
+    constructor(coord, map) {
         this.map = map;
-        this.x = x;
-        this.y = y;
+        this.x = coord.x;
+        this.y = coord.y;
         this.slow = 0;
         this.vel = {
             x: 1,
