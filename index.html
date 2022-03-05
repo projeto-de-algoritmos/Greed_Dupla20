@@ -11,7 +11,10 @@
         </div>
         <div id="initialScreen" class="actived">
             <h1>LABIRINTO DO HOGLIN</h1>
-            <button>JOGAR</button>
+            <div>
+                <button onclick="onFreeGame()">Modo Livre</button>
+                <button onclick="onCollectGame()">Modo Coletor</button>
+            </div>
             <br />
             <img id="hoglin" src="src/images/hoglin.png" />
         </div>
@@ -38,6 +41,7 @@
     <script src="./src/inteligentEnemy.js"></script>
     <script src="./src/game.js"></script>
     <script src="./src/freeGame.js"></script>
+    <script src="./src/collectGame.js"></script>
     <script src="./src/run.js"></script>
 </body>
 

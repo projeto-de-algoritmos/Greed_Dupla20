@@ -42,6 +42,7 @@ header {
 button {
     font-size: large;
     padding: 10px;
+    margin: 0px 20px 0px 20px;
 }
 
 .disabled {
