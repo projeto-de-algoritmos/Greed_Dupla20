@@ -24,8 +24,7 @@ function mergeSort(array) {
 }
 
 function knapsack(totalSpace, stars) {
-    stars = [...stars];
-    const sortedStars = mergeSort(stars);
+    const sortedStars = mergeSort([...stars]);
     let spaceSack = totalSpace;
     let i = 0;
     let score = 0;
@@ -39,6 +38,7 @@ function knapsack(totalSpace, stars) {
         }
         i++;
     }
+
     return [score, bestStars];
 }
 /*
