@@ -26,7 +26,7 @@ class Game {
 
     end() {
         this.stopSong();
-        this.playSong('lostSong');
+        this.playSong('lost');
         this.stop();
     }
 
@@ -36,7 +36,8 @@ class Game {
 
     playSong(songID) {
         this.stopSong();
-        this.song = window.document.querySelector(`#${songID}`)
+        this.song = window.document.querySelector(`#song`)
+        this.song.src = `assets/music/${songID}.mp3`;
         this.song.volume = this.volume;
         this.song.play();
     }

@@ -58,7 +58,7 @@ class Map {
 
     setImage(x, y, type) {
         const cell = this.getCellElement(x, y);
-        cell.innerHTML = `<img src="./src/images/${type}.gif" />`;
+        cell.innerHTML = `<img src="assets/images/${type}.gif" />`;
     }
 
     getSlow(x, y) {

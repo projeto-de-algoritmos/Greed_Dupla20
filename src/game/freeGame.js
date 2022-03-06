@@ -12,7 +12,7 @@ class FreeGame extends Game {
     update() {
         super.update();
         this.inteligentEnemy.update(this.player);
-
+        
         if (this.star.collide(this.player)) {
             this.star.updatePosition();
             this.score++;
