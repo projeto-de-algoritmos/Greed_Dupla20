@@ -8,6 +8,7 @@ class Game {
         this.volume = volume;
         this.introDuration = introDuration;
         this.running = false;
+        this.kill = false;
         
         this.playRandomSong();
         this.listenKeys();
@@ -40,6 +41,7 @@ class Game {
         this.stopSong();
         this.playSong('lost');
         this.pause();
+        this.kill = true;
     }
 
     pause(){
@@ -78,11 +80,11 @@ class Game {
 
     listenKeys(){
         document.addEventListener('keyup', (event) => {
+            if(this.kill) return;
             if(event.code == "KeyP"){
                 this.pause();
             }
             if(event.code == "Space" && !this.running){
-                console.log("aaaa")
                 this.run();
             }
         }, false);

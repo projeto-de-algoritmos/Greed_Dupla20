@@ -67,8 +67,7 @@ function runCollectGame() {
     totalSpace += 10;
     starsCount += 1;
 
-    delete collectGame;
-    collectGame = createCollectGame(playerName, accumulateScore, STARS_ATTRIBUTES, starsCount, totalSpace).start();
+    createCollectGame(playerName, accumulateScore, STARS_ATTRIBUTES, starsCount, totalSpace).start();
 }
 
 function disableInitialScreen() {
