@@ -47,15 +47,18 @@ class Map {
         return COLORS[value];
     }
 
+    getCellElement(x, y){
+        return window.document.querySelector(`#${this.getID(x, y)}`);
+    }
+
     setColor(x, y, color) {
-        const block = window.document.querySelector(`#${this.getID(x, y)}`)
-        block.style.backgroundColor = this.getColor(color);
+        const cell = this.getCellElement(x, y);
+        cell.style.backgroundColor = this.getColor(color);
     }
 
     setImage(x, y, type) {
-        let block = window.document.querySelector(`#${this.getID(x, y)}`);
-
-        block.innerHTML = `<img src="./src/images/${type}.gif" />`;
+        const cell = this.getCellElement(x, y);
+        cell.innerHTML = `<img src="./src/images/${type}.gif" />`;
     }
 
     getSlow(x, y) {

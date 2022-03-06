@@ -45,9 +45,10 @@ function runCollectGame() {
         { coord: new Coord(11, 13), value: 10, weight: 10, color: "starRosa" },
         { coord: new Coord(11, 14), value: 10, weight: 10, color: "starRoxo" },
     ]
+    const totalSpace = 55;
 
     const freeGame = new CollectGame(
-        timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes
+        timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, totalSpace
     )
 
     freeGame.start();

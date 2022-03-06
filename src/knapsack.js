@@ -1,5 +1,5 @@
 function merge(left, right) {
-    let arr = [];
+    const arr = [];
 
     while (left.length && right.length) {
         if ((left[0].value / left[0].weight) < (right[0].value / right[0].weight)) {
@@ -24,11 +24,11 @@ function mergeSort(array) {
 }
 
 function knapsack(totalSpace, stars) {
-    const sortedStars = mergeSort([...stars]);
-    var spaceSack = totalSpace;
-    var i = 0;
-    var score = 0;
-    var bestStars = [];
+    const sortedStars = mergeSort(stars);
+    let spaceSack = totalSpace;
+    let i = 0;
+    let score = 0;
+    const bestStars = [];
 
     while (spaceSack > 0) {
         if (spaceSack >= sortedStars[i].weight) {
@@ -39,10 +39,7 @@ function knapsack(totalSpace, stars) {
             i++;
         }
     }
-
-    console.log(bestStars);
-
-    return score;
+    return [score, bestStars];
 }
 /*
 var totalSpace = 40;

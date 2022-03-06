@@ -10,7 +10,6 @@ class Game {
     }
 
     start() {
-        this.map.render();
         this.gameUpdate = setInterval(() => {
             this.update();
             this.render();
@@ -28,6 +27,9 @@ class Game {
     end() {
         this.stopSong();
         this.playSong('lostSong');
+    }
+
+    stop(){
         clearInterval(this.gameUpdate);
     }
 

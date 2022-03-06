@@ -1,15 +1,22 @@
 class CollectGame extends Game {
-    constructor(timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes) {
+    constructor(timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, totalSpace) {
         super(timeout, map, volume);
+        this.map = map;
         this.score = 0;
-        this.maxWeight = 100;
+        this.totalSpace = totalSpace;
         this.player = new Player(playerCoord, map);
         this.inteligentEnemy = new InteligentEnemy(inteligentEnemyCoord, map);
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
         this.stars = starsAttributes.map(sa => new Star(sa.coord, map, sa.value, sa.weight, sa.color));
         this.objects.push(...this.stars, this.player, ...this.enemies);
-        this.bestValue = knapsack(55, this.stars);
+        [this.bestValue, this.bestStars] = knapsack(totalSpace, this.stars);
         this.header = this.createHeader();
+    }
+
+    start(){
+        this.render();
+        this.startBestStarAnimation();
+        setTimeout(() => super.start(), 5000);
     }
 
     update() {
@@ -31,7 +38,7 @@ class CollectGame extends Game {
         this.header.score.innerText = this.score;
         this.header.bestValue.innerText = this.bestValue;
         this.header.sack.innerText = this.player.sack;
-        this.header.maxWeight.innerText = this.maxWeight;
+        this.header.totalSpace.innerText = this.totalSpace;
     }
 
     end() {
@@ -54,7 +61,14 @@ class CollectGame extends Game {
             score: window.document.querySelector("#score"),
             bestValue: window.document.querySelector("#valorOtimo"),
             sack: window.document.querySelector("#espacoGastoMochila"),
-            maxWeight: window.document.querySelector("#espacoTotalMochila"),
+            totalSpace: window.document.querySelector("#espacoTotalMochila"),
         }
+    }
+
+    startBestStarAnimation(){
+        this.bestStars.forEach(s => {
+            const cell = this.map.getCellElement(s.x, s.y);
+            cell.classList.add("bestStar");
+        });
     }
 }
