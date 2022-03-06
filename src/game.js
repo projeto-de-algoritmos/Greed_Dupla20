@@ -27,6 +27,7 @@ class Game {
     end() {
         this.stopSong();
         this.playSong('lostSong');
+        this.stop();
     }
 
     stop(){
