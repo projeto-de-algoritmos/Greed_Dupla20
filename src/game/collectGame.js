@@ -85,6 +85,5 @@ class CollectGame extends Game {
             stars.push(createStar(randomStarAttr()))
         }
         return stars
-
     }
 }

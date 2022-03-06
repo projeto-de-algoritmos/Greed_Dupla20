@@ -10,11 +10,10 @@ class Player {
             x: 1,
             y: 0
         }
+        this.listenKeys();
     }
 
     update() {
-        this.readKeys();
-
         if (!this.map.isBlockFree(...this.nextPosition())) {
             return;
         }
@@ -31,7 +30,7 @@ class Player {
         return [this.x + this.vel.x, this.y + this.vel.y];
     }
 
-    readKeys() {
+    listenKeys() {
         document.addEventListener('keyup', (event) => {
             switch (event.code) {
                 case "ArrowUp":

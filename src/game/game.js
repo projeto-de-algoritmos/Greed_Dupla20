@@ -7,16 +7,21 @@ class Game {
         this.gameUpdate = 0;
         this.volume = volume;
         this.introDuration = introDuration;
+        this.running = false;
+        
         this.playRandomSong();
+        this.listenKeys();
     }
 
     start(){
+        this.running = true;
         this.render();
         this.startAnimation();
         setTimeout(() => this.run(), this.introDuration*1000);
     }
 
     run() {
+        this.running = true;
         this.gameUpdate = setInterval(() => {
             this.update();
             this.render();
@@ -34,10 +39,11 @@ class Game {
     end() {
         this.stopSong();
         this.playSong('lost');
-        this.stop();
+        this.pause();
     }
 
-    stop(){
+    pause(){
+        this.running = false;
         clearInterval(this.gameUpdate);
     }
 
@@ -69,4 +75,16 @@ class Game {
     }
 
     startAnimation(){}
+
+    listenKeys(){
+        document.addEventListener('keyup', (event) => {
+            if(event.code == "KeyP"){
+                this.pause();
+            }
+            if(event.code == "Space" && !this.running){
+                console.log("aaaa")
+                this.run();
+            }
+        }, false);
+    }
 }
