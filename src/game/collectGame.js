@@ -13,7 +13,7 @@ class CollectGame extends Game {
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
         this.stars = this.createStars(starsAttributes, starsCount);
 
-        this.objects.push(...this.stars, this.player, ...this.enemies);
+        this.objects.push( ...this.stars, this.player, ...this.enemies);
         
         [this.bestValue, this.bestStars] = knapsack(totalSpace, this.stars);
     }
@@ -21,6 +21,14 @@ class CollectGame extends Game {
     update() {
         super.update();
         this.inteligentEnemy.update(this.player);
+
+        const starCollided = this.stars.find(s => s.collide(this.player));
+        if (starCollided) {
+            this.stars = this.stars.filter(s => s !== starCollided);
+            this.objects = this.objects.filter(o => o !== starCollided)
+            this.score += starCollided.value;
+            this.player.sack += starCollided.weight;
+        }
 
         if (this.isGameOver()) {
             this.end();
