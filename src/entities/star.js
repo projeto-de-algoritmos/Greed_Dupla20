@@ -1,13 +1,12 @@
 
 class Star {
 
-    constructor(coord, map, value, weight, color = "star") {
+    constructor(map, value, weight, color = "star") {
         this.map = map;
-        this.x = coord.x;
-        this.y = coord.y;
         this.value = value;
         this.weight = weight;
         this.color = color;
+        this.updatePosition();
     }
 
     update() { }
