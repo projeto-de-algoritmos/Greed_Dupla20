@@ -2,10 +2,10 @@ const COLORS = ['#0D0E14', 'lightgray', '#FFEA47', '#FF621F', '#FF2921', '#3D3BD
 const SLOW_TIME = [2, 5, 10]
 
 class Map {
-    constructor(data, width, height) {
-        this.data = data;
-        this.width = width;
-        this.height = height;
+    constructor(mapData) {
+        this.data = mapData.data;
+        this.width = mapData.width;
+        this.height = mapData.height;
     }
 
     isBlockFree(x, y) {

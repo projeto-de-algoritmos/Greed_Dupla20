@@ -12,7 +12,7 @@ function onCollectGame() {
 }
 
 function runFreeGame() {
-    const map = new Map(MAP_DATA, WIDTH, HEIGTH);
+    const map = new Map(randomMapData());
     const playerCoord = new Coord(28, 1);
     const starCoord = new Coord(11, 10);
     const inteligentEnemyCoord = new Coord(14, 14);
@@ -30,7 +30,7 @@ function runFreeGame() {
 }
 
 function runCollectGame() {
-    const map = new Map(MAP_DATA, WIDTH, HEIGTH);
+    const map = new Map(randomMapData());
     const playerCoord = new Coord(28, 1);
     const inteligentEnemyCoord = new Coord(14, 14);
     const enemiesCoords = [
