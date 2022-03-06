@@ -1,22 +1,21 @@
 class CollectGame extends Game {
-    constructor(timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, totalSpace) {
-        super(timeout, map, volume);
+    constructor(timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration) {
+        super(timeout, map, volume, introDuration);
+
+        this.header = this.createHeader();
         this.map = map;
+
         this.score = 0;
         this.totalSpace = totalSpace;
+
         this.player = new Player(playerCoord, map);
         this.inteligentEnemy = new InteligentEnemy(inteligentEnemyCoord, map);
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
-        this.stars = starsAttributes.map(sa => new Star(sa.coord, map, sa.value, sa.weight, sa.color));
-        this.objects.push(...this.stars, this.player, ...this.enemies);
-        [this.bestValue, this.bestStars] = knapsack(totalSpace, this.stars);
-        this.header = this.createHeader();
-    }
+        this.stars = this.createStars(starsAttributes, starsCount);
 
-    start(){
-        this.render();
-        this.startBestStarAnimation();
-        setTimeout(() => super.start(), 5000);
+        this.objects.push(...this.stars, this.player, ...this.enemies);
+        
+        [this.bestValue, this.bestStars] = knapsack(totalSpace, this.stars);
     }
 
     update() {
@@ -65,10 +64,19 @@ class CollectGame extends Game {
         }
     }
 
-    startBestStarAnimation(){
-        this.bestStars.forEach(s => {
-            const cell = this.map.getCellElement(s.x, s.y);
-            cell.classList.add("bestStar");
-        });
+    startAnimation(){
+        super.focusAnimation([...this.bestStars, this.player]);
+    }
+
+    createStars(starsAttributes, starsCount){
+        const randomStarAttr = () => starsAttributes[getRandomInt(0, starsAttributes.length)];
+        const createStar = starAttr => new Star(this.map, starAttr.value, starAttr.weight, starAttr.color);
+        const stars = [];
+
+        for(let i = 0; i < starsCount; i++){
+            stars.push(createStar(randomStarAttr()))
+        }
+        return stars
+
     }
 }

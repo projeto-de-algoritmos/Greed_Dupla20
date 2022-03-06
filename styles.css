@@ -1,4 +1,5 @@
 #hoglin {
+    margin-top: 50px;
     width: 400;
     height: 400;
 }
@@ -54,15 +55,14 @@ body {
 
 @keyframes bestCellAnimation {
     50% {
-        transform: scale(1.5);
-        box-shadow: inset 0 0 1em gold, 0 0 1em red;
+        transform: scale(2);
+        box-shadow: inset 0 0 1em green, 0 0 1em red;
     }
 }
 
-.bestStar {
+.focusAnimation {
     text-align: center;
     animation-name: bestCellAnimation;
-    animation-duration: 5s;
 }
 
 .disabled {

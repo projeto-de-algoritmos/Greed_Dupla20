@@ -30,7 +30,7 @@ function knapsack(totalSpace, stars) {
     let score = 0;
     const bestStars = [];
 
-    while (spaceSack > 0) {
+    while (spaceSack > 0 && i < sortedStars.length) {
         if (spaceSack >= sortedStars[i].weight) {
             score += sortedStars[i].value;
             spaceSack -= sortedStars[i].weight;

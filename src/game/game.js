@@ -1,15 +1,22 @@
 
 class Game {
-    constructor(timeout, map, volume) {
+    constructor(timeout, map, volume, introDuration) {
         this.timeout = timeout;
         this.map = map;
         this.objects = [this.map]
         this.gameUpdate = 0;
         this.volume = volume;
+        this.introDuration = introDuration;
         this.playRandomSong();
     }
 
-    start() {
+    start(){
+        this.render();
+        this.startAnimation();
+        setTimeout(() => this.run(), this.introDuration*1000);
+    }
+
+    run() {
         this.gameUpdate = setInterval(() => {
             this.update();
             this.render();
@@ -44,7 +51,6 @@ class Game {
 
     stopSong() {
         if (this.song) {
-            console.log(this.song);
             this.song.pause();
         }
     }
@@ -53,4 +59,14 @@ class Game {
         const songs = 3;
         this.playSong(`music${getRandomInt(1, songs + 1)}`)
     }
+
+    focusAnimation(objects){
+        objects.forEach(o => {
+            const cell = this.map.getCellElement(o.x, o.y);
+            cell.classList.add("focusAnimation");
+            cell.style.animationDuration = `${this.introDuration}s`;
+        });
+    }
+
+    startAnimation(){}
 }
