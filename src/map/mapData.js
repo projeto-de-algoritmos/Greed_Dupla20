@@ -1,6 +1,14 @@
+const maps = [map1, map2];
+let mapIndex = getRandomInt(0, maps.length);
+
 function randomMapData(){
-    const maps = [map1, map2];
     return maps[getRandomInt(0, maps.length)]();
+}
+
+function nextMap(){
+    mapIndex = (mapIndex + 1) % maps.length;
+    console.log(mapIndex)
+    return maps[mapIndex]();
 }
 
 function map1(){

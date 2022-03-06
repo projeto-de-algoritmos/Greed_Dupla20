@@ -1,25 +1,33 @@
 class CollectGame extends Game {
-    constructor(timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration) {
+    constructor(playerName, accumulateScore, timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration) {
         super(timeout, map, volume, introDuration);
 
         this.header = this.createHeader();
         this.map = map;
 
         this.score = 0;
+        this.accumulateScore = accumulateScore;
         this.totalSpace = totalSpace;
-        this.highscores = JSON.parse(localStorage.getItem('highscores')) || [];
 
+        this.highscores = JSON.parse(localStorage.getItem('highscores')) || [];
+        this.renderHighscoreTable();
+
+        this.playerName = playerName;
         this.player = new Player(playerCoord, map);
         this.inteligentEnemy = new InteligentEnemy(inteligentEnemyCoord, map);
         this.enemies = enemiesCoords.map(ec => new Enemy(ec, map));
         this.stars = this.createStars(starsAttributes, starsCount);
+        this.lightestStar = this.getLightestStar();
 
         this.valuesTable = this.createValuesTable(starsAttributes);
-        this.highscoreTable = this.createHighscoreTable();
 
         this.objects.push(...this.stars, this.player, ...this.enemies);
 
         [this.bestValue, this.bestStars] = knapsack(totalSpace, this.stars);
+    }
+
+    startAnimation() {
+        super.focusAnimation([...this.bestStars, this.player]);
     }
 
     update() {
@@ -28,14 +36,18 @@ class CollectGame extends Game {
 
         const starCollided = this.stars.find(s => s.collide(this.player));
         if (starCollided) {
-            this.stars = this.stars.filter(s => s !== starCollided);
-            this.objects = this.objects.filter(o => o !== starCollided)
+            this.removeStar(starCollided);
             this.score += starCollided.value;
+            this.accumulateScore.value += starCollided.value;
             this.player.sack += starCollided.weight;
         }
 
         if (this.isGameOver()) {
             this.end();
+        }
+
+        if (this.isLevelClear()) {
+            this.nextLevel();
         }
     }
 
@@ -50,79 +62,113 @@ class CollectGame extends Game {
         this.header.bestValue.innerText = this.bestValue;
         this.header.sack.innerText = this.player.sack;
         this.header.totalSpace.innerText = this.totalSpace;
+        this.header.accumulateScore.innerText = this.accumulateScore.value;
     }
 
     end() {
         window.document.querySelector("#lost").classList.add("actived");
         this.setHighscore();
-        this.highscoreTable = this.createHighscoreTable();
+        this.renderHighscoreTable();
+        super.end();
+    }
+
+    nextLevel() {
+        this.setHighscore();
+        this.renderHeader();
+        this.renderNextLevelHeader();
+        this.renderHighscoreTable();
         super.end();
     }
 
     isGameOver() {
         return this.enemies.find(e => e.collide(this.player))
-            || this.inteligentEnemy.collide(this.player)
-            || this.player.sack > this.totalSpace;
+            || this.inteligentEnemy.collide(this.player);
+    }
+
+    isLevelClear() {
+        return this.stars.length === 0 || this.lightestStar.weight + this.player.sack > this.totalSpace;
+    }
+
+    getLightestStar() {
+        return this.stars.reduce((prev, current) => (prev.weight < current.weight) ? prev : current)
+    }
+
+    removeStar(star) {
+        this.stars = this.stars.filter(s => s !== star);
+        this.objects = this.objects.filter(o => o !== star)
+        this.lightestStar = this.getLightestStar();
     }
 
     createHeader() {
-        window.document.querySelector("#cabecalho").innerHTML = `
-            <h2>Valor Otimo: <span id="valorOtimo">0</span></h2>
-            <h2>Score: <span id="score">0</span></h2>
-            <h2>Mochila: <span id="espacoGastoMochila">0</span>/<span id="espacoTotalMochila">0</span></h2>
+        const header = window.document.querySelector("#cabecalho");
+        header.innerHTML = `
+            <div id="collectGameScore">
+                <h2 class="score">Score: <span id="score">0</span></h2>
+                <h2 class="score">Mochila: <span id="espacoGastoMochila">0</span>/<span id="espacoTotalMochila">0</span></h2>
+                <h2 class="score">Score otimo: <span id="valorOtimo">0</span></h2>
+                <h2 class="score">Score acumulado: <span id="acumulado">0</span></h2>
+            </div>
         `;
         return {
+            element: header,
             score: window.document.querySelector("#score"),
             bestValue: window.document.querySelector("#valorOtimo"),
             sack: window.document.querySelector("#espacoGastoMochila"),
             totalSpace: window.document.querySelector("#espacoTotalMochila"),
+            accumulateScore: window.document.querySelector("#acumulado"),
         }
     }
 
     createValuesTable(starsAttributes) {
-        window.document.querySelector("#valuesTable").classList.remove("disabled");
+        const valuesTable = window.document.querySelector("#valuesTable");
 
-        var html = `<caption>Tabela de Valores</caption>
-                <tr>
-                    <th>Estrela</th>
-                    <th>Peso</th>
-                    <th>Valor</th>
-                </tr>`;
+        let html = `<caption>Tabela de Valores</caption>
+            <tr>
+                <th>Estrela</th>
+                <th>Peso</th>
+                <th>Valor</th>
+            </tr>`;
 
-        starsAttributes.forEach(function (star) {
+        starsAttributes.forEach(sa => {
             html += `<tr>
-                    <td><img src="assets/images/${star.color}.gif"/></td>
-                    <td>${star.weight}</td>
-                    <td>${star.value}</td>
+                <td><img src="assets/images/${sa.color}.gif"/></td>
+                <td>${sa.weight}</td>
+                <td>${sa.value}</td>
                 </tr>`
         });
 
-        window.document.querySelector("#valuesTable").innerHTML = html;
-        return window.document.querySelector("#valuesTable");
+        valuesTable.classList.remove("disabled");
+        valuesTable.innerHTML = html;
+        return valuesTable;
     }
 
-    createHighscoreTable() {
-        window.document.querySelector("#highscore").classList.remove("disabled");
+    renderHighscoreTable() {
+        const highscoreTable = window.document.querySelector("#highscore")
 
-        var html = `<caption>Melhores Pontuacoes</caption>
-                <tr>
-                    <th>Jogador</th>
-                    <th>Pontuacao</th>
-                </tr>`;
 
-        this.highscores.forEach(function (highscore) {
+        let html = `<caption>Melhores Pontuacoes</caption>
+        <tr>
+        <th>Jogador</th>
+        <th>Pontuacao</th>
+        </tr>`;
+
+        this.highscores.forEach(h => {
             html += `<tr>
-                    <td>${highscore.player}</td>
-                    <td>${highscore.score}</td>
-                </tr>`
+            <td>${h.player}</td>
+            <td>${h.score}</td>
+            </tr>`
         });
 
-        window.document.querySelector("#highscore").innerHTML = html;
-        return window.document.querySelector("#highscore");
+        highscoreTable.classList.remove("disabled");
+        highscoreTable.innerHTML = html;
     }
 
-    startAnimation() {
-        super.focusAnimation([...this.bestStars, this.player]);
+    renderNextLevelHeader() {
+        this.header.element.innerHTML = `
+            <h1>Parabens!</h1>
+            <h2>Nao ha mais estrelas que caibam na mochila!</h2>
+            <button onclick="runCollectGame()">Proxima Fase</button>
+        ` + this.header.element.innerHTML;
     }
 
     createStars(starsAttributes, starsCount) {
@@ -137,15 +183,17 @@ class CollectGame extends Game {
     }
 
     setHighscore() {
-        if (this.highscores.length < 5 || this.score > this.highscores[this.highscores.length - 1].score) {
-            if (this.highscores.length == 5)
-                this.highscores.pop();
+        const player = this.highscores.find(h => h.player === this.playerName)
 
-            const playerName = window.prompt(`Insira seu nome:`);
-
-            this.highscores.push({ score: this.score, player: playerName });
-            this.highscores.sort((a, b) => a.score > b.score ? -1 : 1);
-            localStorage.setItem('highscores', JSON.stringify(this.highscores));
+        if (player) {
+            player.score = this.accumulateScore.value;
+        } else {
+            this.highscores.push({ score: this.accumulateScore.value, player: this.playerName });
         }
+
+        this.highscores.sort((a, b) => b.score - a.score);
+        this.highscores = this.highscores.slice(0, 5);
+
+        localStorage.setItem('highscores', JSON.stringify(this.highscores));
     }
 }

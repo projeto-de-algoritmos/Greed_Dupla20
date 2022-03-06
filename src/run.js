@@ -7,6 +7,7 @@ function onFreeGame() {
 }
 
 function onCollectGame() {
+    playerName = window.prompt(`Insira seu nome:`).toUpperCase();
     disableInitialScreen()
     runCollectGame();
 }
@@ -29,8 +30,8 @@ function runFreeGame() {
     freeGame.start();
 }
 
-function runCollectGame() {
-    const map = new Map(randomMapData());
+function createCollectGame(playerName, accumulateScore, starsAttributes, starsCount, totalSpace){
+    const map = new Map(nextMap());
     const playerCoord = new Coord(28, 1);
     const inteligentEnemyCoord = new Coord(14, 14);
     const enemiesCoords = [
@@ -38,22 +39,36 @@ function runCollectGame() {
         new Coord(1, 26),
         new Coord(29, 26),
     ]
-    const starsAttributes = [
-        { value: 10, weight: 20, color: "starAmarela" },
-        { value: 5, weight: 10, color: "starAzul" },
-        { value: 1, weight: 5, color: "starCobre" },
-        { value: 10, weight: 10, color: "starRosa" },
-        { value: 10, weight: 10, color: "starRoxo" },
-    ]
-    const starsCount = 10;
-    const totalSpace = 55;
+
     const introDuration = 8;
 
-    const freeGame = new CollectGame(
-        timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration
+    return new CollectGame(
+        playerName, accumulateScore, timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration
     )
+}
 
-    freeGame.start();
+let playerName;
+let accumulateScore = {
+    value: 0,
+}
+let starsCount = 9;
+let totalSpace = 50;
+let collectGame;
+
+const STARS_ATTRIBUTES = [
+    { value: 10, weight: 20, color: "starAmarela" },
+    { value: 5, weight: 10, color: "starAzul" },
+    { value: 1, weight: 5, color: "starCobre" },
+    { value: 10, weight: 10, color: "starRosa" },
+    { value: 10, weight: 10, color: "starRoxo" },
+]
+
+function runCollectGame() {
+    totalSpace += 10;
+    starsCount += 1;
+
+    delete collectGame;
+    collectGame = createCollectGame(playerName, accumulateScore, STARS_ATTRIBUTES, starsCount, totalSpace).start();
 }
 
 function disableInitialScreen() {

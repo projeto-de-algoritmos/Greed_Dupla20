@@ -30,8 +30,7 @@ class FreeGame extends Game {
     }
 
     renderScore() {
-        window.document.querySelector("#cabecalho").innerHTML = `<h2>Score: <span id="score">0</span></h2>`;
-        window.document.querySelector("#score").innerHTML = this.score;
+        window.document.querySelector("#cabecalho").innerHTML = `<h2>Score: <span id="score">${this.score}</span></h2>`;
     }
 
     end() {
