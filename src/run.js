@@ -30,7 +30,7 @@ function runFreeGame() {
     freeGame.start();
 }
 
-function createCollectGame(playerName, accumulateScore, starsAttributes, starsCount, totalSpace){
+function createCollectGame(playerName, accumulateScore, starsAttributes, starsCount, totalSpace) {
     const map = new Map(nextMap());
     const playerCoord = new Coord(28, 1);
     const inteligentEnemyCoord = new Coord(14, 14);
@@ -56,11 +56,11 @@ let totalSpace = 50;
 let collectGame;
 
 const STARS_ATTRIBUTES = [
-    { value: 10, weight: 20, color: "starAmarela" },
-    { value: 5, weight: 10, color: "starAzul" },
+    { value: 15, weight: 1, color: "starRoxo" },
     { value: 1, weight: 5, color: "starCobre" },
-    { value: 10, weight: 10, color: "starRosa" },
-    { value: 10, weight: 10, color: "starRoxo" },
+    { value: 5, weight: 10, color: "starAzul" },
+    { value: 25, weight: 15, color: "starRosa" },
+    { value: 10, weight: 20, color: "starAmarela" },
 ]
 
 function runCollectGame() {

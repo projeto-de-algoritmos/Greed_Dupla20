@@ -37,9 +37,13 @@ class CollectGame extends Game {
         const starCollided = this.stars.find(s => s.collide(this.player));
         if (starCollided) {
             this.removeStar(starCollided);
-            this.score += starCollided.value;
-            this.accumulateScore.value += starCollided.value;
             this.player.sack += starCollided.weight;
+
+            if (this.player.sack <= this.totalSpace) {
+                this.accumulateScore.value += starCollided.value;
+                this.score += starCollided.value;
+            }
+
         }
 
         if (this.isGameOver()) {
