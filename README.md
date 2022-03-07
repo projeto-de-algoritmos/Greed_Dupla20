@@ -22,7 +22,12 @@ O labirinto do Hoglin dessa entrega consiste numa evolução do trabalho de [Gra
 <hr>
 
 ## Apresentação
+[Video da Apresentação](assets/videos/apresentacao.mp4)
+
 <hr>
+
+## Demonstração
+
 
 ## Instalação 
 **Linguagem**: Javascript<br>
