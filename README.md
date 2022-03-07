@@ -1,44 +1,37 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
-
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
 # NomedoProjeto
 
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: 3<br>
+**Conteúdo da Disciplina**: Greed<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 19/0025379  |  Brenno Oliveira Silva |
+| 19/0020377  |  Thiago Sampaio de Paiva |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O labirinto do Hoglin dessa entrega consiste numa evolução do trabalho de (Grafos2)[https://github.com/projeto-de-algoritmos/Grafos2_LabirintoDoHoglin], adicionando um modo que o jogador deve passar pelas fases avaliando o peso e valor das estrelas buscando a melhor pontuação calculado por um algoritmo de knapsack.
+<hr>
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+<img src="assets/images/telaInicial.png" width="600"/>
+
+<img src="src/images/telaJogo.png" width="600"/>
+
+<img src="src/images/telaGameOver.png" width="600"/>
+<hr>
+
+## Apresentação
+<hr>
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: Javascript<br>
+**Pré-requisitos**: Navegador Web
+<hr>
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+Para utilizar o projeto acesse: https://labirinto-hoglin-greed.herokuapp.com/ ou abra o arquivo ´index.html´ no navegador web de sua preferência
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
 
 
 
