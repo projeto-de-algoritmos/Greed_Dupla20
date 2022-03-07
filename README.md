@@ -1,4 +1,4 @@
-# NomedoProjeto
+# Labirinto Do Hoglin
 
 **Número da Lista**: 20<br>
 **Conteúdo da Disciplina**: Greed<br>
