@@ -41,9 +41,3 @@ function knapsack(totalSpace, stars) {
 
     return [score, bestStars];
 }
-/*
-var totalSpace = 40;
-var stars = [{ value: 10, weight: 20 }, { value: 5, weight: 10 }, { value: 30, weight: 30 }]
-
-knapsack(totalSpace, stars);
-*/

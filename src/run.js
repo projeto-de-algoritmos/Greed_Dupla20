@@ -12,6 +12,8 @@ function onCollectGame() {
     runCollectGame();
 }
 
+// Modo Livre
+
 function runFreeGame() {
     const map = new Map(randomMapData());
     const playerCoord = new Coord(28, 1);
@@ -30,22 +32,8 @@ function runFreeGame() {
     freeGame.start();
 }
 
-function createCollectGame(playerName, accumulateScore, starsAttributes, starsCount, totalSpace) {
-    const map = new Map(nextMap());
-    const playerCoord = new Coord(28, 1);
-    const inteligentEnemyCoord = new Coord(14, 14);
-    const enemiesCoords = [
-        new Coord(1, 1),
-        new Coord(1, 26),
-        new Coord(29, 26),
-    ]
 
-    const introDuration = 8;
-
-    return new CollectGame(
-        playerName, accumulateScore, timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration
-    )
-}
+// Modo Coletor
 
 let playerName;
 let accumulateScore = {
@@ -68,6 +56,23 @@ function runCollectGame() {
     starsCount += 1;
 
     createCollectGame(playerName, accumulateScore, STARS_ATTRIBUTES, starsCount, totalSpace).start();
+}
+
+function createCollectGame(playerName, accumulateScore, starsAttributes, starsCount, totalSpace) {
+    const map = new Map(nextMap());
+    const playerCoord = new Coord(28, 1);
+    const inteligentEnemyCoord = new Coord(14, 14);
+    const enemiesCoords = [
+        new Coord(1, 1),
+        new Coord(1, 26),
+        new Coord(29, 26),
+    ]
+
+    const introDuration = 8;
+
+    return new CollectGame(
+        playerName, accumulateScore, timeout, map, volume, playerCoord, inteligentEnemyCoord, enemiesCoords, starsAttributes, starsCount, totalSpace, introDuration
+    )
 }
 
 function disableInitialScreen() {
